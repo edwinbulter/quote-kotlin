@@ -6,7 +6,7 @@ When launched, the API can be tested in IntelliJ using the file quote_api_test.h
 https://github.com/edwinbulter/quote-kotlin/tree/main/src/test/kotlin
 
 Implemented features:
-- When a random quote is requested and no already sent quote for the client is found in the database, A set of quotes will be requested at ZenQuotes and written in the H2DB database.
+- When a random quote is requested and only previously sent quotes for the client exist in the database, A set of quotes will be requested at ZenQuotes and written in the H2DB database.
 - Only unique quotes are written to the database:
     - by looking at the quoteText and author, quotes are compared
     - if the new quoteText/author combination doesn't appear in the database, it is added
