@@ -1,0 +1,30 @@
+### fetch quotes from zen
+GET https://zenquotes.io/api/quotes
+
+### fetch random quote from zen
+GET https://zenquotes.io/api/random
+
+### GET all quotes
+GET http://localhost:8280/api/v1/quotes
+
+### GET quote by id
+GET http://localhost:8280/api/v1/quote/2
+
+### like a quote with PATCH and id
+PATCH http://localhost:8280/api/v1/quote/2/like
+
+### GET all liked quotes
+GET http://localhost:8280/api/v1/quote/liked
+
+### fetch random quote with GET
+GET http://localhost:8280/api/v1/quote
+
+### fetch random quote with POST and idsToExclude
+POST http://localhost:8280/api/v1/quote
+Content-Type: application/json
+
+[1,2]
+
+### return a stream for receiving SSE events
+GET http://localhost:8280/api/v1/quote/stream
+
