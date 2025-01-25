@@ -2,17 +2,14 @@ package ebulter.quote.service
 
 import ebulter.quote.model.Quote
 import ebulter.quote.repository.QuoteRepository
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
 import java.util.*
 
 @Service
 class QuoteService(private val quoteRepository: QuoteRepository,
-                   private val quoteEventPublisher: QuoteEventPublisher) {
-    @Value("\${zenquotes.url}")
-    lateinit var zenQuotesUrl: String
+                   private val quoteEventPublisher: QuoteEventPublisher,
+                   private val zenService: ZenService) {
 
     fun getAllQuotes(): List<Quote> {
         return quoteRepository.findAll()
@@ -50,7 +47,7 @@ class QuoteService(private val quoteRepository: QuoteRepository,
         }
         if (availableQuotes.isEmpty()) {
             // Fetch new quotes from the Zen API if no quotes remain
-            val zenQuotes = fetchQuotesFromZen()
+            val zenQuotes = zenService.fetchQuotesFromZen()
 
             // Filter Zen quotes by removing duplicates (quoteText + author)
             val existingQuotes = quoteRepository.findAll()
@@ -75,20 +72,4 @@ class QuoteService(private val quoteRepository: QuoteRepository,
         return quoteEventPublisher.getEvents()
     }
 
-    private fun fetchQuotesFromZen(): List<ZenQuote> {
-        val webClient = WebClient.create()
-        
-        val response = webClient.get()
-            .uri(zenQuotesUrl)
-            .retrieve()
-            .bodyToMono(Array<ZenQuote>::class.java)
-            .block()
-        return response?.toList() ?: emptyList()
-    }
-
-    // Nested class to map Zen API response
-    data class ZenQuote(
-        val q: String = "",
-        val a: String = ""
-    )
 }

@@ -21,7 +21,27 @@
             <id>mavenCentral</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
+        <repository>
+            <id>maven-releases</id>
+            <url>http://localhost:2020/repository/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>maven-snapshots</id>
+            <url>http://localhost:2020/repository/maven-snapshots/</url>
+        </repository>
     </repositories>
+
+    <distributionManagement>
+        <!-- artifact storage locations for mvn deploy -->
+        <repository>
+            <id>maven-releases</id>
+            <url>http://localhost:2020/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <url>http://localhost:2020/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
@@ -96,6 +116,19 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk-jvm</artifactId>
+            <version>1.13.12</version> <!-- Replace with the latest version if newer -->
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
@@ -136,5 +169,7 @@
             <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
+
+
 
 </project>
